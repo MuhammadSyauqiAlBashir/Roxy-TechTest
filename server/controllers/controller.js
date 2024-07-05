@@ -62,6 +62,37 @@ class Controller {
             res.status(500).json({message: "Internal Server Error"})
         }
     }
+    static async addTransaksi(req,res){
+        try {
+            const data = req.body
+            const newTransaksi = await transaksi_hider.create({tgl_transaksi : new Date(),total: data.total})
+            data.items.map(async(item) => {
+                const barang = await master_barang.findByPk(item.id)
+                if(!barang) throw {
+                    code: 404,
+                    message: "Item not listed in the database",
+                };
+                const detailTransaksi = {
+                    id_trans : newTransaksi.id,
+                    id_barang : item.id,
+                    Qty : item.Qty,
+                    harga_barang : barang.harga,
+                    subtotal : item.Qty * barang.harga
+                }
+                await master_barang.update({Qty: barang.Qty - item.Qty},{where: {id: item.id}})
+                await transaksi_ditail.create(detailTransaksi)
+            })
+            res.status(201).json({message: "Data has been created"})
+        } catch (error) {
+            if (error.code === 404) {
+				res.status(404).json({ message: error.message });
+			} else {
+				res.status(500).json({
+					message: "Internal Server Error",
+				});
+			}
+        }
+    }
 }
 
 module.exports= Controller

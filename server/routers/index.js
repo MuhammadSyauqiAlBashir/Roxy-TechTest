@@ -8,6 +8,7 @@ router.post('/master', Controller.addBarang)
 router.put('/master/:id', Controller.updateBarang)
 router.delete('/master/:id', Controller.deleteBarang)
 router.get('/master/:id', Controller.getBarangById)
+router.post('/transaksi', Controller.addTransaksi)
 
 
 
