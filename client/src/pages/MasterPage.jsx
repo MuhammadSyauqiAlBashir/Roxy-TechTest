@@ -105,14 +105,14 @@ function MasterPage() {
     FetchData();
   }, [params]);
   return (
-    <div className="p-28 bg-slate-300 h-screen">
+    <div className="p-20 bg-slate-300 h-screen">
       <h1 className="text-3xl font-bold">Master Page</h1>
       <div className="w-full">
         <label htmlFor="search">Search :</label>
         <input
           type="text"
           name="search"
-          className="w-full border-gray-950 rounded-lg border-2"
+          className="w-full h-10 border-gray-950 rounded-lg border-2"
           onChange={handleSearch}
         />
       </div>
@@ -126,14 +126,14 @@ function MasterPage() {
                 id="id_barang"
                 name="id"
                 disabled
-                className="border border-gray-950 rounded-md"
+                className="border border-gray-950 rounded-md w-60 h-10 p-3"
               />
               <label htmlFor="nm_barang">Nama Barang:</label>
               <input
                 type="text"
                 id="nm_barang"
                 name="nm_barang"
-                className="border border-gray-950 rounded-md"
+                className="border border-gray-950 rounded-md w-60 h-10 p-3"
                 onChange={(e) =>
                   setInput({ ...input, nm_barang: e.target.value })
                 }
@@ -147,7 +147,7 @@ function MasterPage() {
                 id="harga"
                 min={1000}
                 name="harga"
-                className="border border-gray-950 rounded-md"
+                className="border border-gray-950 rounded-md w-60 h-10 p-3"
                 onChange={(e) => setInput({ ...input, harga: e.target.value })}
                 value={input.harga}
               />
@@ -157,7 +157,7 @@ function MasterPage() {
                 id="Qty"
                 name="Qty"
                 min={1}
-                className="border border-gray-950 rounded-md"
+                className="border border-gray-950 rounded-md w-60 h-10 p-3"
                 onChange={(e) => setInput({ ...input, Qty: e.target.value })}
                 value={input.Qty}
               />

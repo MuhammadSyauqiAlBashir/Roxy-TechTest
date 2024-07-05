@@ -75,6 +75,7 @@ class Controller {
                 const detailTransaksi = {
                     id_trans : newTransaksi.id,
                     id_barang : item.id,
+                    harga: barang.harga,
                     Qty : item.Qty,
                     harga_barang : barang.harga,
                     subtotal : item.Qty * barang.harga

@@ -77,20 +77,19 @@ function TransPage() {
     FetchData();
   }, [params]);
   return (
-    <div className="p-28 bg-slate-300 h-screen">
+    <div className="p-28 bg-slate-300 h-max">
       <h1 className="text-3xl font-bold mb-4">Transaction Page</h1>
-      <div className="w-full mb-4">
+      <div className="w-full mb-9">
         <label htmlFor="search">Search :</label>
         <input
           type="text"
           name="search"
-          className="w-full border-gray-950 rounded-lg border-2"
+          className="w-full border-gray-950 rounded-lg border-2 h-12"
           onChange={handleSearch}
         />
       </div>
       {items.length > 0 && (
         <div>
-          <h1>Total : {total}</h1>
           <h1>Cart : </h1> <br />
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -136,12 +135,40 @@ function TransPage() {
                     <td className="px-6 py-4 text-white">{item.nm_barang}</td>
                     <td className="px-6 py-4 text-white">{item.harga}</td>
                     <td className="px-6 py-4 text-white">{item.Qty}</td>
+                    <td className="px-6 py-4 text-white">
+                      <button
+                        onClick={() => {
+                          setItems((prev) => {
+                            let newData = prev.filter(
+                              (item) => item.id !== item.id
+                            );
+                            setTotal(total - item.harga * item.Qty);
+                            return newData;
+                          });
+                        }}
+                        className="bg-red-500 hover:bg-red-700 mr-6 text-white font-bold py-2 px-4 rounded-full"
+                      >
+                        Remove
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-          <button onClick={handleAddTrans} className="bg-green-500 hover:bg-green-700 mr-6 text-white font-bold py-2 px-4 rounded-lg mt-4 mb-7">Purchase Now</button>
+          <button
+            onClick={handleAddTrans}
+            className="bg-green-500 hover:bg-green-700 mr-6 text-white font-bold py-2 px-4 rounded-lg mt-4 mb-7"
+          >
+            Purchase Now
+          </button>
+          <h1 className="text-black font-extrabold mb-9">
+            Total :{" "}
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(total)}
+          </h1>
         </div>
       )}
       <div className=" mb-4 relative overflow-x-auto shadow-md sm:rounded-lg">
