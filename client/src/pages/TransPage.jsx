@@ -15,6 +15,23 @@ function TransPage() {
       harga: parseInt(event.target[2].value),
       nm_barang: event.target[3].value,
     };
+    let flag = false;
+    let stock = 0;
+    barang.map((item) => {
+      if (item.id == parseInt(newItems.id)) {
+        if (item.Qty < newItems.Qty) {
+          flag = true;
+          stock = item.Qty;
+        }
+      }
+    });
+    if (flag)
+      return Swal.fire(
+        `Quantity is not enough for ${newItems.nm_barang} only ${stock} left`
+      );
+    if (!event.target[1].value)
+      return Swal.fire("Quantity must be filled atleast 1");
+    event.target[1].value = null;
     setItems((prev) => {
       let found = false;
       let newData = prev.map((item) => {
@@ -23,6 +40,8 @@ function TransPage() {
           return {
             id: item.id,
             Qty: item.Qty + newItems.Qty,
+            harga: item.harga,
+            nm_barang: item.nm_barang,
           };
         }
         return item;
@@ -49,6 +68,7 @@ function TransPage() {
         },
       });
       setItems([]);
+      FetchData();
       Swal.fire("Success Adding Transaction");
     } catch (error) {
       console.log(error);
@@ -140,7 +160,7 @@ function TransPage() {
                         onClick={() => {
                           setItems((prev) => {
                             let newData = prev.filter(
-                              (item) => item.id !== item.id
+                              (item2) => item.id !== item2.id
                             );
                             setTotal(total - item.harga * item.Qty);
                             return newData;
@@ -188,7 +208,7 @@ function TransPage() {
                 Quantity
               </th>
               <th scope="col" className="px-6 py-3">
-                Action / Option
+                Add to Shopping Cart
               </th>
             </tr>
           </thead>
